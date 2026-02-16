@@ -1,0 +1,45 @@
+{
+  "name": "things3-mcp",
+  "version": "0.1.0",
+  "description": "Things 3 MCP Server — token-efficient, full CRUD, AppleScript + URL scheme",
+  "author": "Piers",
+  "license": "MIT",
+  "runtime": "python",
+  "entry_point": "things3-mcp",
+  "environment_variables": {
+    "THINGS_MCP_TRANSPORT": {
+      "description": "Transport mode: 'stdio' (default) or 'http'",
+      "default": "stdio",
+      "required": false
+    },
+    "THINGS_MCP_HOST": {
+      "description": "HTTP host (default: 127.0.0.1)",
+      "default": "127.0.0.1",
+      "required": false
+    },
+    "THINGS_MCP_PORT": {
+      "description": "HTTP port (default: 8765)",
+      "default": "8765",
+      "required": false
+    },
+    "THINGS_MCP_API_KEY": {
+      "description": "API key for HTTP transport auth (auto-generated if empty)",
+      "required": false
+    },
+    "THINGS_AUTH_TOKEN": {
+      "description": "Things URL scheme auth token (auto-detected if empty)",
+      "required": false
+    }
+  },
+  "tools": [
+    "get_inbox", "get_today", "get_upcoming", "get_anytime", "get_someday",
+    "get_logbook", "get_trash", "get_deadlines",
+    "get_random_inbox", "get_random_today", "get_random_anytime", "get_random_todos",
+    "get_todos", "get_projects", "get_areas", "get_tags", "get_tagged_items",
+    "search_todos", "search_advanced", "get_recent",
+    "show_item", "get_summary",
+    "add_todo", "add_project", "update_todo", "update_project",
+    "json_import", "json_export",
+    "show_in_things", "search_in_things"
+  ]
+}
