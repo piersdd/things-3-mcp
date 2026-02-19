@@ -141,6 +141,22 @@ export THINGS_MCP_API_KEY=your-secret-key-here  # auto-generated if empty
 uv run things3-mcp
 ```
 
+### Bearer Token Authentication
+
+When exposing the server through a tunnel or reverse proxy, set `THINGS_MCP_API_TOKEN` to require a bearer token on every request:
+
+```bash
+export THINGS_MCP_API_TOKEN=your-secret-token-here
+```
+
+All HTTP requests must then include the header:
+
+```
+Authorization: Bearer your-secret-token-here
+```
+
+Requests without a valid token receive `401 Unauthorized`. If the env var is **unset or empty**, bearer auth is disabled and the server behaves as before (suitable for localhost-only access).
+
 ### Security Warning
 
 **Never expose the HTTP port directly to the internet.** Use a reverse proxy with TLS:
@@ -183,7 +199,8 @@ curl -X POST http://localhost:8765/mcp \
 | `THINGS_MCP_TRANSPORT` | `stdio` | `stdio` or `http` |
 | `THINGS_MCP_HOST` | `127.0.0.1` | HTTP bind address |
 | `THINGS_MCP_PORT` | `8765` | HTTP port |
-| `THINGS_MCP_API_KEY` | (auto) | API key for HTTP auth |
+| `THINGS_MCP_API_TOKEN` | (none) | Bearer token for HTTP auth — if set, requires `Authorization: Bearer <token>` |
+| `THINGS_MCP_API_KEY` | (auto) | API key for HTTP auth (X-API-Key header) |
 | `THINGS_AUTH_TOKEN` | (auto) | Things URL scheme auth token |
 
 ## Architecture

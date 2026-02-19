@@ -916,11 +916,23 @@ def json_export(
 def main():
     """Main entry point for the Things 3 MCP server."""
     if TRANSPORT == "http":
-        from things3_mcp.auth import get_api_key
+        from starlette.middleware import Middleware
 
+        from things3_mcp.auth import BearerAuthMiddleware, get_api_key, get_bearer_token
+
+        bearer = get_bearer_token()
         api_key = get_api_key()
         logger.info("Starting HTTP transport on %s:%s", HTTP_HOST, HTTP_PORT)
-        logger.info("API Key: %s", api_key)
-        mcp.run(transport="http", host=HTTP_HOST, port=int(HTTP_PORT))
+        if bearer:
+            logger.info("Bearer token auth enabled (THINGS_MCP_API_TOKEN is set)")
+        else:
+            logger.info("Bearer token auth disabled (no THINGS_MCP_API_TOKEN)")
+            logger.info("API Key: %s", api_key)
+        mcp.run(
+            transport="http",
+            host=HTTP_HOST,
+            port=int(HTTP_PORT),
+            middleware=[Middleware(BearerAuthMiddleware)],
+        )
     else:
         mcp.run()
